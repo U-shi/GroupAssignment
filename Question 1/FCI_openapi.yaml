@@ -1,0 +1,182 @@
+openapi: 3.0.1
+info:
+  title: FCI
+  version: 0.1.0
+servers:
+- url: "{server}:{port}/FCI"
+  variables:
+    server:
+      default: http://localhost
+    port:
+      default: "9000"
+paths:
+  /addLecture:
+    post:
+      operationId: postAddlecture
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Staff'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Staff'
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMsg'
+  /getLectures:
+    get:
+      operationId: getGetlectures
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Staff'
+  /updateLecture:
+    put:
+      operationId: putUpdatelecture
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Staff'
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Staff'
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMsg'
+  /getLecture/{staffNumber}:
+    get:
+      operationId: getGetlectureStaffnumber
+      parameters:
+      - name: staffNumber
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Staff'
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMsg'
+  /deleteLecture:
+    delete:
+      operationId: deleteDeletelecture
+      parameters:
+      - name: staffNumber
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Staff'
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMsg'
+  /getLecturesByCourse:
+    get:
+      operationId: getGetlecturesbycourse
+      parameters:
+      - name: courseId
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Staff'
+  /getLecturesByOffice:
+    get:
+      operationId: getGetlecturesbyoffice
+      parameters:
+      - name: officeId
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Staff'
+components:
+  schemas:
+    Staff:
+      required:
+      - courses
+      - officeNumber
+      - staffName
+      - staffNumber
+      - title
+      type: object
+      properties:
+        staffNumber:
+          type: string
+        officeNumber:
+          type: string
+        staffName:
+          type: string
+        title:
+          type: string
+        courses:
+          type: array
+          items:
+            type: integer
+            format: int64
+    ErrorMsg:
+      required:
+      - errmsg
+      type: object
+      properties:
+        errmsg:
+          type: string
