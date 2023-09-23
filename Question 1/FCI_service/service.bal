@@ -15,6 +15,7 @@ public type Course record {
     int NQA_level;
 };
 
+//table datatype in ballerina for inmemory storage
 public final table<Staff> key(staffNumber) StaffTable = table [
     {staffNumber: "jay3958", officeNumber: "A756", staffName: "Jayden Jack", title: "Mr", courses: [1, 2, 3]},
     {staffNumber: "lia3468", officeNumber: "B756", staffName: "Liam Noah", title: "Mrs", courses: [1, 3]},
